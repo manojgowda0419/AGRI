@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    
+    <!-- Properties for log file paths and patterns -->
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_PATH">logs</Property>
+        <Property name="FILE_NAME">agrichain-automation</Property>
+    </Properties>
+    
+    <!-- Appenders define where logs are output -->
+    <Appenders>
+        
+        <!-- Console Appender for real-time monitoring -->
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Filters>
+                <!-- Only show INFO and above in console -->
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </Console>
+        
+        <!-- File Appender for all logs -->
+        <File name="FileAppender" fileName="${LOG_PATH}/${FILE_NAME}.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </File>
+        
+        <!-- Rolling File Appender for automatic log rotation -->
+        <RollingFile name="RollingFileAppender" 
+                     fileName="${LOG_PATH}/${FILE_NAME}.log"
+                     filePattern="${LOG_PATH}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <!-- Roll over daily -->
+                <TimeBasedTriggeringPolicy/>
+                <!-- Roll over when file reaches 10MB -->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <!-- Keep maximum 30 files -->
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+        
+        <!-- Error File Appender for errors only -->
+        <File name="ErrorFileAppender" fileName="${LOG_PATH}/${FILE_NAME}-errors.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </File>
+        
+        <!-- Test Results Appender -->
+        <File name="TestResultsAppender" fileName="${LOG_PATH}/test-results.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} - %msg%n"/>
+            <Filters>
+                <!-- Only capture test result messages -->
+                <MarkerFilter marker="TEST_RESULT" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </File>
+        
+    </Appenders>
+    
+    <!-- Loggers define logging levels for different packages -->
+    <Loggers>
+        
+        <!-- Framework specific loggers -->
+        <Logger name="config" level="DEBUG" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+        
+        <Logger name="pages" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+        
+        <Logger name="tests" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+            <AppenderRef ref="TestResultsAppender"/>
+        </Logger>
+        
+        <Logger name="utils" level="DEBUG" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+        
+        <!-- Selenium WebDriver logging -->
+        <Logger name="org.openqa.selenium" level="WARN" additivity="false">
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
+        
+        <!-- HTTP Client logging (for WebDriver communication) -->
+        <Logger name="org.apache.http" level="WARN" additivity="false">
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
+        
+        <!-- TestNG logging -->
+        <Logger name="org.testng" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+        
+        <!-- WebDriverManager logging -->
+        <Logger name="io.github.bonigarcia.wdm" level="INFO" additivity="false">
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
+        
+        <!-- Root logger - catches all other logging -->
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+            <AppenderRef ref="ErrorFileAppender"/>
+        </Root>
+        
+    </Loggers>
+    
+</Configuration> 

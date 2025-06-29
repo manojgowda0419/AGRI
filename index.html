@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrichain - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="browser-frame">
+        <div class="website-header">
+            <div class="logo">
+                <div class="logo-placeholder"></div>
+            </div>
+            <div class="site-title">Agrichain</div>
+            <div class="auth-links">
+                <a href="index.html" class="auth-link active">Login</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="form-container">
+                <h2>Login to Agrichain</h2>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="Enter your email..." required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder="Enter your password..." required>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+                <div id="loginMessage" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html> 

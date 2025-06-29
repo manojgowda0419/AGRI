@@ -1,0 +1,223 @@
+{
+  "users": [
+    {
+      "id": "user1",
+      "name": "Test User One",
+      "email": "test1@agrichain.com",
+      "password": "TestPass123",
+      "description": "Primary test user for automation"
+    },
+    {
+      "id": "user2", 
+      "name": "Test User Two",
+      "email": "test2@agrichain.com",
+      "password": "TestPass456",
+      "description": "Secondary test user for multi-user scenarios"
+    },
+    {
+      "id": "adminUser",
+      "name": "Admin User",
+      "email": "admin@agrichain.com", 
+      "password": "AdminPass789",
+      "description": "Admin user for privileged operations"
+    }
+  ],
+  
+  "stringTestCases": [
+    {
+      "id": "test1",
+      "input": "abcabcbb",
+      "expectedLength": 3,
+      "expectedSubstring": "abc",
+      "description": "Standard test case with repeating pattern"
+    },
+    {
+      "id": "test2",
+      "input": "bbbbb",
+      "expectedLength": 1,
+      "expectedSubstring": "b",
+      "description": "All same characters"
+    },
+    {
+      "id": "test3", 
+      "input": "pwwkew",
+      "expectedLength": 3,
+      "expectedSubstring": "wke",
+      "description": "Mixed characters with repetition"
+    },
+    {
+      "id": "test4",
+      "input": "abcdef",
+      "expectedLength": 6,
+      "expectedSubstring": "abcdef",
+      "description": "All unique characters"
+    },
+    {
+      "id": "test5",
+      "input": "a",
+      "expectedLength": 1,
+      "expectedSubstring": "a",
+      "description": "Single character"
+    }
+  ],
+  
+  "specialCharacterTests": [
+    {
+      "id": "special1",
+      "input": "a!@#a!@#",
+      "expectedLength": 4,
+      "expectedSubstring": "a!@#",
+      "description": "Special characters with repetition"
+    },
+    {
+      "id": "special2",
+      "input": "123!@#456",
+      "expectedLength": 9,
+      "expectedSubstring": "123!@#456",
+      "description": "Numbers and special characters"
+    },
+    {
+      "id": "special3",
+      "input": "  spaces  here  ",
+      "expectedLength": 7,
+      "expectedSubstring": "s here ",
+      "description": "String with spaces"
+    }
+  ],
+  
+  "unicodeTests": [
+    {
+      "id": "unicode1",
+      "input": "αβγαβγ",
+      "expectedLength": 3,
+      "expectedSubstring": "αβγ",
+      "description": "Greek letters with repetition"
+    },
+    {
+      "id": "unicode2",
+      "input": "🙂😊🙂😊",
+      "expectedLength": 2,
+      "expectedSubstring": "🙂😊",
+      "description": "Emoji characters"
+    },
+    {
+      "id": "unicode3",
+      "input": "café",
+      "expectedLength": 4,
+      "expectedSubstring": "café",
+      "description": "Accented characters"
+    }
+  ],
+  
+  "performanceTests": [
+    {
+      "id": "perf1",
+      "input": "abcdefghijklmnopqrstuvwxyz",
+      "expectedLength": 26,
+      "expectedSubstring": "abcdefghijklmnopqrstuvwxyz",
+      "description": "Alphabet - all unique characters"
+    },
+    {
+      "id": "perf2",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expectedLength": 1,
+      "expectedSubstring": "a",
+      "description": "Long string of same character"
+    },
+    {
+      "id": "perf3",
+      "input": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz",
+      "expectedLength": 26,
+      "expectedSubstring": "abcdefghijklmnopqrstuvwxyz",
+      "description": "Repeated alphabet pattern"
+    }
+  ],
+  
+  "errorTestCases": [
+    {
+      "id": "error1",
+      "input": null,
+      "description": "Null input test"
+    },
+    {
+      "id": "error2", 
+      "input": "",
+      "description": "Empty string test"
+    }
+  ],
+  
+  "authenticationTestData": {
+    "validCredentials": [
+      {
+        "email": "valid@agrichain.com",
+        "password": "ValidPass123"
+      }
+    ],
+    "invalidCredentials": [
+      {
+        "email": "invalid@email",
+        "password": "password",
+        "expectedError": "Please enter a valid email address!"
+      },
+      {
+        "email": "test@agrichain.com", 
+        "password": "123",
+        "expectedError": "Password must be at least 6 characters long!"
+      },
+      {
+        "email": "nonexistent@agrichain.com",
+        "password": "password123", 
+        "expectedError": "Invalid email or password!"
+      }
+    ],
+    "registrationTestData": [
+      {
+        "name": "",
+        "email": "test@agrichain.com",
+        "password": "password123",
+        "confirmPassword": "password123",
+        "expectedError": "Name is required!"
+      },
+      {
+        "name": "Test User",
+        "email": "invalid-email",
+        "password": "password123", 
+        "confirmPassword": "password123",
+        "expectedError": "Please enter a valid email address!"
+      },
+      {
+        "name": "Test User",
+        "email": "test@agrichain.com",
+        "password": "123",
+        "confirmPassword": "123",
+        "expectedError": "Password must be at least 6 characters long!"
+      },
+      {
+        "name": "Test User",
+        "email": "test@agrichain.com",
+        "password": "password123",
+        "confirmPassword": "differentpass",
+        "expectedError": "Passwords do not match!"
+      }
+    ]
+  },
+  
+  "testConfiguration": {
+    "defaultWaitTime": 10,
+    "maxRetries": 3,
+    "screenshotOnFailure": true,
+    "logLevel": "INFO",
+    "browsers": ["chrome", "firefox", "edge"],
+    "environments": {
+      "local": {
+        "baseUrl": "file:///Users/k.manoj/Documents/Agri/index.html"
+      },
+      "staging": {
+        "baseUrl": "https://staging.agrichain.com"
+      },
+      "production": {
+        "baseUrl": "https://agrichain.com"
+      }
+    }
+  }
+} 
